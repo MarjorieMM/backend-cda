@@ -33,6 +33,11 @@
 
   // Une constante ne peut pas être modifiée
   const MA_CONSTANTE = 'Valeur';
+
+  $registered = false; // booléen
+  $name = "John"; // string
+  $age = 26; // integer
+  $weight = 65.2; // float
   ?>
 </body>
 
