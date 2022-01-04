@@ -38,6 +38,13 @@
   $name = "John"; // string
   $age = 26; // integer
   $weight = 65.2; // float
+
+  $a = "3"; // Chaîne de caractères
+  $b = 3; // Nombre entier
+  // Comparaison : deux signes "égal" côte à côte
+  var_dump($a == $b);
+  // Comparaison stricte : TROIS signes "égal" côte à côte
+  var_dump($a === $b);
   ?>
 </body>
 
