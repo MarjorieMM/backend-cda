@@ -1,5 +1,15 @@
 # PHP - Introduction
 
+- [Bases](#bases)
+  - [Fichiers](#fichiers)
+  - [Tags d'ouverture et fermeture](#tags-douverture-et-fermeture)
+  - [Bases à retenir](#bases-à-retenir)
+- [Commentaires](#commentaires)
+  - [Syntaxe](#syntaxe)
+- [Constantes](#constantes)
+- [Tableaux](#tableaux)
+- [Comparaison et égalité, différence](#comparaison-et-égalité-différence)
+
 ## Bases
 
 ### Fichiers
