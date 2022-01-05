@@ -1,3 +1,6 @@
+<?php
+require_once 'functions.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,6 +48,12 @@
   var_dump($a == $b);
   // Comparaison stricte : TROIS signes "égal" côte à côte
   var_dump($a === $b);
+
+  echo "<br />";
+  direBonjour();
+  direBonjour("Lucas");
+  direBonjour("Toto");
+  direBonjour("Tata");
   ?>
 </body>
 
