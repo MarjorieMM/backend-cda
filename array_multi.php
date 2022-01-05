@@ -47,20 +47,24 @@ $peoples = [
 </head>
 
 <body>
-  <h1>Utilisateurs</h1>
-  <div class="list">
-    <?php foreach ($peoples as $people) { ?>
-      <article class="item">
-        <div class="picture">
-          <img src="<?php echo $people['avatar']; ?>" alt="<?php echo $people['name'] . ' ' . $people['firstname']; ?>" />
-        </div>
-        <div class="infos">
-          <h3><?php echo $people['name'] . ' ' . $people['firstname']; ?></h3>
-          <h4><?php echo $people['age']; ?> ans</h4>
-        </div>
-      </article>
-    <?php } ?>
-  </div>
+  <header>
+    <h1>Utilisateurs</h1>
+  </header>
+  <main>
+    <section class="list">
+      <?php foreach ($peoples as $people) { ?>
+        <article class="item">
+          <div class="picture">
+            <img src="<?php echo $people['avatar']; ?>" alt="<?php echo $people['name'] . ' ' . $people['firstname']; ?>" />
+          </div>
+          <div class="infos">
+            <h3><?php echo $people['name'] . ' ' . $people['firstname']; ?></h3>
+            <h4><?php echo $people['age']; ?> ans</h4>
+          </div>
+        </article>
+      <?php } ?>
+    </section>
+  </main>
 </body>
 
 </html>
