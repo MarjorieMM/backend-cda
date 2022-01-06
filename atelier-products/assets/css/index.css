@@ -1,0 +1,57 @@
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+h1 {
+  text-transform: uppercase;
+  font-size: 2.5em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.item {
+  margin-bottom: 1.5em;
+  box-shadow: 0px 0px 12px 2px rgba(0, 0, 0, 0.3);
+}
+
+.infos {
+  padding: 0em 1em;
+}
+
+h3 {
+  font-size: 1.7em;
+  margin: 0.5em 0em;
+}
+
+h4 {
+  font-size: 1.4em;
+  margin: 0.3em 0em;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.picture {
+  margin-bottom: 0.5em;
+}
+
+.item,
+img {
+  max-width: 370px;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.categories p {
+  margin: 0.3em 0.5em;
+  padding: 0.2em 0.4em;
+  background-color: #000;
+  color: #fff;
+}
