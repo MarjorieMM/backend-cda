@@ -148,3 +148,107 @@ $a === $b; // Faux => comparaison sur les valeurs ET le type, les types sont dif
 ```
 
 L'opérateur "différent de" en PHP est `!=`. De la même façon, on pourra comparer de manière stricte 2 variables en utilisant `!==`.
+
+## L'inclusion de fichiers
+
+En PHP, il est possible d'inclure un fichier dans un autre, à l'aide de plusieurs méthodes de la SPL.
+
+Les deux plus couramment utilisées sont [`require`](https://www.php.net/manual/fr/function.require.php) et [`require_once`](https://www.php.net/manual/fr/function.require-once.php).
+
+> ### Lorsqu'on inclut un fichier PHP B dans un autre fichier PHP A, alors on importe tous les symboles (constantes, variables, fonctions...) définis dans B dans le fichier A. Par ailleurs, B peut consommer n'importe quel symbole préalablement défini dans A
+
+On va donc pouvoir séparer les différentes parties de notre script PHP en plusieurs fichiers, afin de découper plus proprement notre application, par exemple :
+
+- Définition de données
+- Réutilisation d'un élément d'interface
+- Affichage d'un élément (notre `item.php`)
+- etc...
+
+> Voir les fichiers `layout/header.php` et `layout/footer.php` qui sont inclus dans le fichier `list.php` par exemple
+
+## Fonctions
+
+Une fonction est une suite d'instructions nommée, qu'on peut appeler partout où on en a besoin.
+
+```php
+<?php
+function maFonction(string $param1, string $param2 = 'defaultValue'): string
+{
+  // Instructions à exécuter
+}
+```
+
+La ligne de définition d'une fonction contient le mot-clé `function`, le nom de la fonction, ses éventuels paramètres, et son type de retour. Il s'agit de la **signature** de la fonction.
+
+### Paramètres, valeurs par défaut
+
+Les paramètres d'une fonction définissent les valeurs qui seront passées en entrée par le code appelant la fonction.
+
+Il est possible de définir des paramètres **facultatifs**, en spécifiant une valeur par défaut.
+
+```php
+<?php
+// Définition de la fonction
+function direBonjour(string $nom = "Sam"): void // signature de la fonction
+{
+  echo "BONJOUR $nom !!!";
+}
+```
+
+Je peux ainsi appeler la fonction avec ou sans paramètre :
+
+```php
+direBonjour("Bob"); // avec un paramètre
+direBonjour(); // sans paramètre : valeur par défaut = "Sam"
+```
+
+> Voir les fichiers `functions.php` et `index.php`
+
+### Valeur de retour
+
+Une fonction peut **retourner une valeur** au code appelant, avec l'instruction `return`.
+
+> L'instruction `return`, quand elle est utilisée, **provoque la sortie** de la fonction
+
+```php
+<?php
+function getParagraphUppercase(string $text): string
+{
+  return "<p>" . strtoupper($text) . "</p>";
+}
+```
+
+Dans ce cas, on peut récupérer la valeur retournée dans le code appelant :
+
+```php
+// on récupère et on met dans la variable $paragraph la valeur retournée depuis la fonction paragraphMajuscules
+$paragraph = getParagraphUppercase("Hello world");
+```
+
+## Switch
+
+La structure de contrôle `switch` permet d'exécuter du code de manière conditionnelle. Dans ce sens, elle se rapproche du `if`.
+
+En revanche, sa syntaxe consiste simplement, à partir d'une variable, d'énumérer les cas possibles pour lesquels on aimerait qu'une ou plusieurs actions soient effectuées, ainsi qu'un cas par défaut qui couvrera la cas non supportés (un peu comme un `else` à la fin d'un `if`).
+
+Pour chaque cas, PHP exécutera les lignes suivantes (**y compris les `cases` suivant**) jusqu'à la prochaine instruction `break`, qui provoque la sortie du `switch`.
+
+```php
+// Syntaxe
+switch ($variable) {
+  case "valeur 1":
+    //actions pour la valeur 1...
+    break;
+  case "valeur 2":
+    //actions pour la valeur 2...
+    break;
+  case "valeur 3":
+    //actions pour la valeur 3 ET la valeur 4...
+  case "valeur 4":
+    //actions pour la valeur 4...
+    break;
+  default:
+    //actions pour la valeur 5 et le reste des valeurs, non supportées
+    //le break sur le cas par défaut, qui est le dernier, n'est pas nécessaire
+}
+```
