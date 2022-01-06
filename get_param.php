@@ -7,23 +7,15 @@ require_once 'peoples.php';
 // et non par des indexes numériques
 $id = $_GET['id'];
 
-var_dump($peoples[$id]);
+// var_dump($peoples);
 
-/*
-$peoples :
-[
-  [0] => [
-    'id' => 1,
-    'avatar' => ...,
-  ],
-  [1] => [
-    'id' => 45,
-    'avatar' => ...,
-  ],
-  [2] => [
-    'id' => 153,
-    'avatar' => ...,
-  ],
-  ...
-]
-*/
+function findUser($id, $users)
+{
+  foreach ($users as $user) {
+    if ($user["id"] == $id) {
+      var_dump($user);
+    }
+  }
+}
+
+findUser($id, $peoples);

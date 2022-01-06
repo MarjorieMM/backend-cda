@@ -1,5 +1,6 @@
 <?php
 // définition des données
+$var = "3";
 $peoples = [
   [
     'id' => 1,
