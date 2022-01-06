@@ -9,6 +9,11 @@
 - [Constantes](#constantes)
 - [Tableaux](#tableaux)
 - [Comparaison et égalité, différence](#comparaison-et-égalité-différence)
+- [L'inclusion de fichiers](#linclusion-de-fichiers)
+- [Fonctions](#fonctions)
+  - [Paramètres, valeur par défaut](#paramètres-valeurs-par-défaut)
+  - [Valeur de retour](#valeur-de-retour)
+- [Switch](#switch)
 
 ## Bases
 
