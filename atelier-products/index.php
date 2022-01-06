@@ -25,6 +25,7 @@ if ($page === 0) {
 // Page 2 : départ = 5
 // Page 3 : départ = 10
 // ==> ($page - 1) * PRODUCTS_PER_PAGE
+// $startIndex = $page * PRODUCTS_PER_PAGE - PRODUCTS_PER_PAGE;
 $startIndex = ($page - 1) * PRODUCTS_PER_PAGE;
 
 // Je construis un sous-ensemble de produits en extrayant une portion de $products
