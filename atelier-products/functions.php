@@ -1,8 +1,7 @@
 <?php
 
-$tva = 20;
-
-function fullPrice($vat, $price)
+function redirect(string $location): void
 {
-    return $price * $vat / 100 + $price;
+    header('Location: ' . $location);
+    exit;
 }

@@ -30,7 +30,7 @@ h4 {
 
 .list {
 	display: flex;
-	/* align-items: center; */
+	align-items: center;
 	flex-wrap: wrap;
 	justify-content: space-around;
 	gap: 1em;
