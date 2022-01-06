@@ -34,7 +34,7 @@ $startIndex = ($page - 1) * PRODUCTS_PER_PAGE;
 // que je veux afficher par page
 $displaySet = array_slice($products, $startIndex, PRODUCTS_PER_PAGE);
 if (empty($displaySet)) { // pas de résultat
-  redirect('index.php?page=1');
+  redirect('index.php?page=' . DEFAULT_PAGE);
 }
 ?>
 <!DOCTYPE html>
