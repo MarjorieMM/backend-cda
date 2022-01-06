@@ -1,4 +1,4 @@
-<article class="item">
+<article class="item"></article>
   <div class="picture">
     <a href="get_param.php?id=<?php echo $people['id']; ?>">
       <img src="<?php echo $people['avatar']; ?>" alt="<?php echo $people['name'] . ' ' . $people['firstname']; ?>" />
