@@ -7,7 +7,7 @@ require_once 'functions.php';
 // de cette valeur.
 // Par ailleurs, il est utile de pouvoir nommer cette valeur (nom de la constante)
 // pour mieux comprendre, dans le code, à quoi correspond ce "5".
-const PRODUCTS_PER_PAGE = 5;
+const PRODUCTS_PER_PAGE = 4;
 
 // intval convertit une valeur donnée en valeur entière
 // Le paramètre GET "page" pouvant ne pas être présent dans l'URL,
@@ -36,6 +36,10 @@ $displaySet = array_slice($products, $startIndex, PRODUCTS_PER_PAGE);
 if (empty($displaySet)) { // pas de résultat
   redirect('index.php?page=' . DEFAULT_PAGE);
 }
+
+// Pagination
+$nbPages = ceil(count($products) / PRODUCTS_PER_PAGE);
+// 1 - 2 - 3 - 4 - ... - nbPages
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -60,6 +64,29 @@ if (empty($displaySet)) { // pas de résultat
       <?php foreach ($displaySet as $product) {
         require 'product-item.php';
       } ?>
+    </section>
+    <section class="pagination">
+      <?php if ($page > 1) { ?>
+        <a href="?page=<?php echo $page - 1; ?>">
+          <?php echo "<"; ?>
+        </a>
+      <?php } ?>
+
+      <?php for ($i = 1; $i <= $nbPages; $i++) { ?>
+        <?php if ($i === $page) { ?>
+          <span><?php echo $i; ?></span>
+        <?php } else { ?>
+          <a href="?page=<?php echo $i; ?>">
+            <?php echo $i; ?>
+          </a>
+        <?php } ?>
+      <?php } ?>
+
+      <?php if ($page < $nbPages) { ?>
+        <a href="?page=<?php echo $page + 1; ?>">
+          <?php echo ">"; ?>
+        </a>
+      <?php } ?>
     </section>
   </main>
 </body>
