@@ -56,3 +56,30 @@ img {
 	background-color: #000;
 	color: #fff;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.pagination a,
+.pagination span {
+  padding: 0.5em;
+}
+
+.pagination a {
+  text-decoration: none;
+  background-color: #3f51b5;
+  color: #fff;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.pagination a:hover {
+  background-color: #2d3458;
+}
+
+.pagination span {
+  font-weight: bold;
+  border: 1px solid black;
+}
