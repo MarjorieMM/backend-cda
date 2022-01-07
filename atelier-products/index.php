@@ -36,6 +36,7 @@ $displaySet = array_slice($products, $startIndex, PRODUCTS_PER_PAGE);
 if (empty($displaySet)) { // pas de résultat
   redirect('index.php?page=' . DEFAULT_PAGE);
 }
+$nbPages = ceil(count($products) / PRODUCTS_PER_PAGE);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -61,6 +62,13 @@ if (empty($displaySet)) { // pas de résultat
         require 'product-item.php';
       } ?>
             </section>
+            <div class="pagination">
+                <ul>
+                    <?php for ($i = 1; $i <= $nbPages; $i++) { ?>
+                    <li><a href="<?php echo 'index.php?page=' . $i ?>"><?php echo $i ?></a></li>
+                    <?php } ?>
+                </ul>
+            </div>
         </main>
     </body>
 
