@@ -14,6 +14,14 @@
   - [Paramètres, valeur par défaut](#paramètres-valeurs-par-défaut)
   - [Valeur de retour](#valeur-de-retour)
 - [Switch](#switch)
+- [Variables superglobales, paramètres GET](#variables-superglobales-paramètres-get)
+  - [Variables superglobales](#variables-superglobales)
+  - [$\_GET](#_get)
+  - [$\_POST](#_post)
+- [Formulaires](#formulaires)
+  - [Méthode](#méthode)
+  - [Cible](#cible)
+  - [Champs du formulaire](#champs-du-formulaire)
 
 ## Bases
 
