@@ -1,38 +1,26 @@
 <?php
+require_once 'calcul-functions.php';
 // Partie traitement du formulaire
-if (isset($_GET['nb1']) && isset($_GET['nb2']) && isset($_GET['operator'])) {
+if (isFormSubmitted()) {
   // Initialisation de la variable d'erreur à false : par défaut, tout va bien
   // Jusqu'à ce qu'on rencontre potentiellement une erreur
   $error = false;
   // Validation des données saisies
   // On veut s'assurer que nb1 et nb2 sont bien des valeurs numériques
   // Et que l'opérateur est bien un opérateur connu pour nous
-  if (!is_numeric($_GET['nb1']) || !is_numeric($_GET['nb2'])) {
+  if (!validateOperands($_GET['nb1'], $_GET['nb2'])) {
     echo "Veuillez entrer des valeurs numériques";
     $error = true;
   }
 
   // Si l'opérateur est connu, alors on calcule le résultat
   // Sinon, on affiche un message d'erreur à l'écran
-  if (!$error) {
-    switch ($_GET['operator']) {
-      case '+':
-        $result = $_GET['nb1'] + $_GET['nb2'];
-        break;
-      case '-':
-        $result = $_GET['nb1'] - $_GET['nb2'];
-        break;
-      case '*':
-        $result = $_GET['nb1'] * $_GET['nb2'];
-        break;
-      case '/':
-        $result = $_GET['nb1'] / $_GET['nb2'];
-        break;
-      default:
-        echo "L'opérateur " . $_GET['operator'] . "n'est pas pris en charge";
-    }
+  $result = calculate($_GET['nb1'], $_GET['operator'], $_GET['nb2']);
 
-    echo "Le résultat est $result";
+  if ($result === false) {
+    echo "L'opérateur n'est pas valide";
+  } else {
+    echo "Résultat : " . $result;
   }
 }
 ?>
