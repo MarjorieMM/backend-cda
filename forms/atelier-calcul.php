@@ -2,15 +2,11 @@
 require_once 'calcul-functions.php';
 // Partie traitement du formulaire
 if (isFormSubmitted()) {
-  // Initialisation de la variable d'erreur à false : par défaut, tout va bien
-  // Jusqu'à ce qu'on rencontre potentiellement une erreur
-  $error = false;
   // Validation des données saisies
   // On veut s'assurer que nb1 et nb2 sont bien des valeurs numériques
   // Et que l'opérateur est bien un opérateur connu pour nous
   if (!validateOperands($_GET['nb1'], $_GET['nb2'])) {
     echo "Veuillez entrer des valeurs numériques";
-    $error = true;
   }
 
   // Si l'opérateur est connu, alors on calcule le résultat
