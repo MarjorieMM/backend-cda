@@ -27,25 +27,25 @@ if (isFormSubmitted()) {
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculette</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculette</title>
+    </head>
 
-<body>
-  <form>
-    <input type="text" name="nb1" placeholder="Nombre 1" />
-    <select name="operator">
-      <option value="+">+</option>
-      <option value="-">-</option>
-      <option value="*">*</option>
-      <option value="/">/</option>
-    </select>
-    <input type="text" name="nb2" placeholder="Nombre 2" />
-    <button type="submit">Calculer</button>
-  </form>
-</body>
+    <body>
+        <form>
+            <input type="text" name="nb1" placeholder="Nombre 1" />
+            <select name="operator">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+            </select>
+            <input type="text" name="nb2" placeholder="Nombre 2" />
+            <button type="submit">Calculer</button>
+        </form>
+    </body>
 
 </html>
