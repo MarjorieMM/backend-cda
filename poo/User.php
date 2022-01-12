@@ -27,9 +27,14 @@ class User
     return $ageInterval->y;
   }
 
+  public function getFormattedBirthDate(): string
+  {
+    return $this->birthDate->format('d/m/Y');
+  }
+
   public function getName(): string
   {
-    return $this->name;
+    return strtoupper($this->name);
   }
 
   public function setName(string $name): self

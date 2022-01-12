@@ -27,11 +27,14 @@ echo $produit2->getPrixTtc(0.1) . "<br />";
 $teleHD = new Produit("Téléviseur HD", 500);
 var_dump($teleHD);
 
-$test = true;
+echo "Le propriétaire de cette télé est né le " . $teleHD->getOwner()->getFormattedBirthDate();
+// Avec un tableau sur lequel on bouclerait, on aurait certainement écrit quelque chose comme :
+// $produits[$i]['owner']['birth_date']->format('d/m/Y')
 
 // --- User ---------------------------------------------------------------------
 $bobDylanBirthDate = new DateTime('24-05-1941');
 $user = new User($bobDylanBirthDate);
 var_dump($user);
 echo $user->getFullName() . "<br />";
-echo $user->getAge();
+echo $user->getAge() . "<br />";
+echo "La date de naissance de Bob Dylan est le " . $user->getFormattedBirthDate();
