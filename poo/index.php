@@ -38,3 +38,20 @@ var_dump($user);
 echo $user->getFullName() . "<br />";
 echo $user->getAge() . "<br />";
 echo "La date de naissance de Bob Dylan est le " . $user->getFormattedBirthDate();
+echo "<br>";
+
+// --- Newsletter---------------------------------------------------------------------
+
+$spams = ["bogus.com", "spam.net", "youhou.fr"];
+$email = 'monemail@hotmail.com';
+$domain = explode('@', $email)[1];
+echo $domain;
+echo "<br>";
+
+$error = 0;
+foreach ($spams as $spam) {
+    if ($spam === $domain) {
+        $error += 1;
+    }
+}
+var_dump($error);

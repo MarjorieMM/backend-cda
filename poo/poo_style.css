@@ -1,0 +1,20 @@
+.newsletter {
+	height: 100px;
+	width: 500px;
+	margin: auto;
+	text-align: center;
+	border: 2px solid black;
+}
+.response {
+	margin: 20px auto;
+	width: 500px;
+	text-align: center;
+	font-weight: bold;
+}
+.invalid {
+	color: red;
+}
+
+.valid {
+	color: green;
+}
