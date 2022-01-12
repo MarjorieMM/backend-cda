@@ -34,4 +34,5 @@ $bobDylanBirthDate = new DateTime('24-05-1941');
 $user = new User($bobDylanBirthDate);
 var_dump($user);
 echo $user->getFullName() . "<br />";
-echo $user->getAge();
+echo $user->getAge() . "<br />";
+echo "La date de naissance de Bob Dylan est le " . $user->getBirthDate()->format('d/m/Y');
