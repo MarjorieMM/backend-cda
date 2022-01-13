@@ -578,3 +578,79 @@ class SpamChecker
 ```
 
 > La manière d'accéder à une constante de classe diffère de l'accès à un attribut. Pour accéder à un attribut, on va utiliser une flèche `->` précédée du mot-clé `$this`. Pour accéder à une constante, on utilisera `self::MA_CONSTANTE` au sein de la classe, et `NomDeLaClasse::MA_CONSTANTE` en-dehors de la classe
+
+#### Exceptions
+
+Les exceptions permettent d'effectuer une **gestion d'erreurs** dans le cadre d'une programmation orientée objet.
+
+En effet, quand on conçoit une fonctionnalité, on va prévoir un flot d'exécution normal. Mais il est possible que surviennent des situations indésirables. On peut alors prévoir leur arrivée en tant qu'elles constituent une **exception** au comportement prévu.
+
+Ainsi, nous pouvons **lancer** une exception au code appelant, qui sera chargé de l'**attraper**.
+
+C'est ici qu'interviendra la gestion de l'erreur : si on attrape une exception, alors nous pouvons gérer son arrivée et agir en conséquence.
+
+##### Exemple
+
+Dans une classe `Email`, à laquelle je fournis l'email à stocker en attribut lors de la construction, je souhaite empêcher l'instanciation de la classe si la valeur passée est incorrecte (email mal formaté).
+
+Ce comportement aurait une double utilité : non seulement je détecterai l'erreur au plus tôt (dès la construction de l'objet), mais en empêchant son instanciation, j'empêche donc également le code qui a appelé ce constructeur de disposer d'une instance de classe dans un état instable (avec un email incorrect, mon instance d'`Email` n'est pas saine).
+
+Ainsi :
+
+```php
+class Email
+{
+  private string $email;
+
+  /**
+   * Creates a new Email instance
+   *
+   * @param string $email The value to be stored in instance
+   * @throws InvalidArgumentException if email format is not valid
+   */
+  public function __construct(string $email)
+  {
+    $this->email = $email;
+
+    if (!$this->isValid()) {
+      throw new InvalidArgumentException("Le format de l'adresse email est invalide");
+    }
+  }
+
+  public function isValid(): bool
+  {
+    return filter_var($this->email, FILTER_VALIDATE_EMAIL) !== false;
+  }
+
+  //...
+}
+```
+
+Et dans un fichier qui aurait besoin d'une instance de la classe `Email` :
+
+```php
+try {
+  $email = new Email($_POST['email']);
+} catch (InvalidArgumentException $ex) {
+  echo $ex->getMessage();
+  exit;
+}
+```
+
+Ceci nous évite de faire quelque chose comme :
+
+```php
+$email = new Email($_POST['email']);
+// A ce moment, on dispose d'une instance dans un état invalide.
+// Donc, nous sommes obligés d'appeler isValid pour valider son état avant d'envisager
+// quoi que ce soit d'autre.
+// C'est exactement le problème : on risque d'oublier d'appeler systématiquement
+// cette méthode pour vérifier l'intégrité de notre objet, et donc
+// manipuler un objet invalide ==> source d'erreurs non maîtrisées
+if (!$email->isValid()) {
+  echo "Le format de l'adresse email est invalide";
+  exit;
+}
+```
+
+> Les exceptions permettent donc une détection plus rapide et plus claire des comportements non désirés
