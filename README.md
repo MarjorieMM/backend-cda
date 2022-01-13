@@ -22,6 +22,16 @@
   - [Méthode](#méthode)
   - [Cible](#cible)
   - [Champs du formulaire](#champs-du-formulaire)
+- [Programmation orientée objet](#programmation-orientée-objet)
+  - [Les classes](##les-classes)
+  - [1. Définition d'une classe](#1-définition-dune-classe)
+    - [Attributs & méthodes](#attributs--méthodes)
+    - [Portées](#portées)
+    - [Encapsulation](#encapsulation)
+  - [2. Instanciation d'objets de classes](#2-instanciation-dobjets-de-classes)
+  - [Constructeur](#constructeur)
+  - [Constantes de classe](#constantes-de-classe)
+  - [Exceptions](#exceptions)
 
 ## Bases
 
