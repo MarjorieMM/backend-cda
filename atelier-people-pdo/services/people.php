@@ -1,5 +1,6 @@
 <?php
 require_once 'db.php';
+require_once 'People.php';
 
 /**
  * Returns the statement to iterate over after looking for all people in db
@@ -16,15 +17,13 @@ function findAllPeopleStatement(): PDOStatement
 /**
  * Add a people to the database
  *
- * @param string $name
- * @param string $firstname
- * @param string $birthdate
+ * @param People $people
  * @return bool
  */
-function addPeople(string $name, string $firstname, string $birthdate): bool
+function addPeople(People $people): bool
 {
   $connection = getConnection();
-  $birthdateSqlVal = $birthdate === '' ? null : $birthdate;
+  $birthdateSqlVal = $people->getBirthDate() ? $people->getBirthDate()->format('Y-m-d') : null;
 
   // Requête non préparée
   // --- A EVITER CAR NON SECURISE ------------------------------------------------------------------------------
@@ -40,8 +39,8 @@ function addPeople(string $name, string $firstname, string $birthdate): bool
   // 2 - Exécution de la requête : j'exécute la requête préparée en lui passant
   // les valeurs de paramètres à utiliser lors de l'exécution
   return $stmt->execute([
-    'people_name' => $name,
-    'people_firstname' => $firstname,
+    'people_name' => $people->getName(),
+    'people_firstname' => $people->getFirstname(),
     'people_birthdate' => $birthdateSqlVal,
   ]);
   // ------------------------------------------------------------------------------------------------------------
