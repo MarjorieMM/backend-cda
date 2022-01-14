@@ -1,6 +1,4 @@
 <?php
-require_once 'constants.php';
-
 function getConnection(): PDO
 {
   $dbConfiguration = parse_ini_file('config/db.ini');
