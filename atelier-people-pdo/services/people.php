@@ -19,13 +19,28 @@ function findAllPeopleStatement(): PDOStatement
  * @param string $name
  * @param string $firstname
  * @param string $birthdate
- * @return PDOStatement|false
+ * @return bool
  */
-function addPeople(string $name, string $firstname, string $birthdate): PDOStatement
+function addPeople(string $name, string $firstname, string $birthdate): bool
 {
   $connection = getConnection();
-  $birthdateSqlVal = $birthdate === '' ? 'NULL' : "'" . $birthdate . "'";
+  $birthdateSqlVal = $birthdate === '' ? null : $birthdate;
 
-  $query = "INSERT INTO people (name, firstname, birthdate) VALUES ('$name', '$firstname', $birthdateSqlVal);";
-  return $connection->query($query);
+  // Requête non préparée
+  // --- A EVITER CAR NON SECURISE ------------------------------------------------------------------------------
+  // $query = "INSERT INTO people (name, firstname, birthdate) VALUES ('$name', '$firstname', $birthdateSqlVal);";
+  // return $connection->query($query);
+  // ------------------------------------------------------------------------------------------------------------
+
+  // Requête préparée
+  // 1 - Préparation de la requête : je déclare mes paramètres de requête
+  // en ajoutant ':' devant le nom du paramètre
+  $stmt = $connection->prepare("INSERT INTO people (name, firstname, birthdate) VALUES (:people_name, :people_firstname, :people_birthdate);");
+  // 2 - Exécution de la requête : j'exécute la requête préparée en lui passant
+  // les valeurs de paramètres à utiliser lors de l'exécution
+  return $stmt->execute([
+    'people_name' => $name,
+    'people_firstname' => $firstname,
+    'people_birthdate' => $birthdateSqlVal,
+  ]);
 }
