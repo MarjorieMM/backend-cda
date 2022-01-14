@@ -32,6 +32,12 @@
   - [Constructeur](#constructeur)
   - [Constantes de classe](#constantes-de-classe)
   - [Exceptions](#exceptions)
+- [Bases de données - PDO](#bases-de-données---pdo)
+  - [Accès](#accès)
+    - [DSN](#dsn)
+    - [Connexion](#connexion)
+  - [Requêtes](#requêtes)
+    - [Mode de lecture](#mode-de-lecture)
 
 ## Bases
 
