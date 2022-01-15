@@ -1,0 +1,8 @@
+CREATE TABLE `wf3-php`.`people`(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `avatar` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    `name` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `firstname` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `birthdate` DATE NULL,
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB CHARSET = utf8mb4 COLLATE utf8mb4_unicode_ci;

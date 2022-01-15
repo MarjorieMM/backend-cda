@@ -1,0 +1,13 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.input {
+margin: 5px;
+}
+
+.avatar > img {
+    width : 30%;
+}
