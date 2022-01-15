@@ -22,6 +22,22 @@
   - [Méthode](#méthode)
   - [Cible](#cible)
   - [Champs du formulaire](#champs-du-formulaire)
+- [Programmation orientée objet](#programmation-orientée-objet)
+  - [Les classes](##les-classes)
+  - [1. Définition d'une classe](#1-définition-dune-classe)
+    - [Attributs & méthodes](#attributs--méthodes)
+    - [Portées](#portées)
+    - [Encapsulation](#encapsulation)
+  - [2. Instanciation d'objets de classes](#2-instanciation-dobjets-de-classes)
+  - [Constructeur](#constructeur)
+  - [Constantes de classe](#constantes-de-classe)
+  - [Exceptions](#exceptions)
+- [Bases de données - PDO](#bases-de-données---pdo)
+  - [Accès](#accès)
+    - [DSN](#dsn)
+    - [Connexion](#connexion)
+  - [Requêtes](#requêtes)
+    - [Mode de lecture](#mode-de-lecture)
 
 ## Bases
 
@@ -376,3 +392,388 @@ $prenom = $_POST['prenom'];
 ```
 
 > Attention, si vous oubliez l'attribut `name`, alors le champ ne sera pas récupéré par PHP et vous ne pourrez pas récupérer la valeur saisie !
+
+## Programmation orientée objet
+
+La POO représente un changement de paradigme significatif. Nous allons parler dans cette partie des différentes notions à savoir pour pouvoir concevoir une architecture qui s'articule autour d'objets, capables de représenter des structures plus complexes que des variables simples (int, string, bool, etc...).
+
+### Les classes
+
+Pour représenter ces structures plus complexes, on peut commencer par définir des **classes** dans notre application.
+
+Une classe représente un **nouveau type** utilisable dans notre application. C'est comme un squelette, une structure, ou un template, si vous voulez, qui représente une notion complexe présente dans notre application.
+
+Par exemple, si nous voulons manipuler des produits dans notre application, au lieu de définir un tableau associatif avec clés et valeurs, nous pouvons **structurer** notre application de manière plus rigoureuse en définissant un nouveau type `Produit`.
+
+Par la suite, nous pourrons instancier des objets de type `Produit`. Nous allons donc parler dans un premier temps de la définition d'une classe, puis de l'instanciation d'objets.
+
+#### 1. Définition d'une classe
+
+On utilise le mot-clé `class` pour définir un nouveau type :
+
+```php
+class Produit
+{}
+```
+
+##### Attributs & méthodes
+
+Dans la définition d'une classe, on va pouvoir ajouter des **attributs**. Ces attributs appartiennent donc à la classe.
+
+On peut généralement appliquer le verbe **avoir** quand veut déterminer les différents attributs d'une classe. Par exemple : "Un produit a un nom et un prix" nous donne donc :
+
+```php
+class Produit
+{
+  public $nom;
+  public $prix;
+}
+```
+
+> Note : à partir de PHP 7.4, il est possible de typer les attributs d'une classe : `public string $nom` par exemple
+
+L'autre intérêt de créer de nouveaux types structurés dans notre application est de lui donner certaines **capacités**.
+
+Ces capacités se matérialisent sous forme de **méthodes** de classe.
+
+Par exemple, nous pourrions dire que notre classe `Produit` possède la capacité de renvoyer le prix TTC du produit, à partir de son attribut `prix` et d'un taux passé en paramètre :
+
+```php
+class Produit
+{
+  public $nom;
+  public $prix;
+
+  public function prixTTC(float $taux): float
+  {
+    return $this->prix + $this->prix * $taux;
+  }
+}
+```
+
+> Dans une méthode, on peut accéder aux attributs de la même classe en utilisant le mot-clé `$this`
+
+Chaque attribut ou méthode possède une **portée** : `public`, `protected` et `private`.
+
+##### Portées
+
+Les portées sont définies pour indiquer au code qui va instancier un objet d'un certain type ce à quoi il peut accéder ou non.
+
+Dans la classe `Produit` que nous avons définie plus haut, les 2 attributs sont publiques.
+
+Cela signifie qu'on pourra y accéder directement depuis une instance d'objet avec la syntaxe suivante :
+
+```php
+$monNomDeProduit = $monInstanceDeProduit->nom;
+```
+
+Si on rend un attribut `private` ou privé, alors on ne peut plus accéder à l'attribut directement depuis une instance.
+
+> La portée `protected` sera expliquée plus tard, dans le cadre de l'héritage.
+
+En réalité, nous allons définir ces attributs comme `private` afin de respecter le principe d'**encapsulation**.
+
+##### Encapsulation
+
+L'encapsulation consiste à placer les attributs d'une classe en `private`, puis de définir des méthodes d'**accession** et de **modification** de ces attributs, ou encore des **getters** et des **setters**.
+
+L'intérêt principal de ce principe est de permettre à la classe de garder le contrôle sur ses attributs. On décide de la façon dont on va pouvoir renvoyer un attribut à tout code extérieur manipulant une instance de cette classe.
+
+> Un autre intérêt peut être de passer un attribut en lecture seule par exemple, donc ne pas déclarer de méthode de modification pour cet attribut. Vu que l'attribut est privé, et qu'on ne dispose que d'une méthode publique d'accession à cet attribut, alors on ne peut que le récupérer, pas le modifier
+
+Réécriture de la classe `Produit` pour respecter le principe d'encapsulation :
+
+```php
+class Produit
+{
+  private $nom;
+  private $prix;
+
+  // Getter / Accesseur, pour l'encapsulation de notre attribut $nom
+  public function getNom(): ?string
+  {
+    // Ici on décide de renvoyer tout le temps le nom d'un produit en majuscules
+    return strtoupper($this->nom);
+  }
+
+  // Setter / Modificateur, toujours pour l'encapsulation
+  public function setNom(string $nom): void
+  {
+    $this->nom = $nom;
+  }
+
+  public function getPrix(): float
+  {
+    return $this->prix;
+  }
+
+  public function setPrix(float $prix)
+  {
+    $this->prix = $prix;
+  }
+
+  // Méthode utilitaire pour un produit, ne concerne pas l'encapsulation
+  public function getPrixTtc(float $taux): float
+  {
+    return $this->prix + $this->prix * $taux;
+  }
+}
+```
+
+#### 2. Instanciation d'objets de classes
+
+Une fois notre structure définie, à l'extérieur de la classe, nous avons la possibilité d'instancier et manipuler des produits. Pour ça, on peut tout simplement déclarer une variable et utiliser le mot-clé `new` avec le type souhaité :
+
+```php
+$produit = new Produit();
+```
+
+Une fois qu'on possède une instance de classe, on a accès à ses méthodes **publiques** :
+
+```php
+$produit->setNom("Téléviseur");
+echo $produit->getNom(); // Affichera "Téléviseur"
+
+$produit->setPrix(800);
+echo $produit->getPrixTTC(0.2); // Affichera 960
+```
+
+#### Constructeur
+
+Lors de l'instanciation d'une classe, on peut vouloir initialiser certaines valeurs par exemple. Pour cela, il est possible de définir un **constructeur** de classe, méthode qui s'exécutera automatiquement lors de l'instanciation de la classe :
+
+```php
+class Produit
+{
+  // ...
+
+  public function __construct(string $nom = "Téléviseur")
+  {
+    $this->nom = $nom;
+  }
+}
+```
+
+Pour utiliser le constructeur, on peut alors instancier notre objet avec des paramètres, comme si on appelait une fonction :
+
+```php
+// Mon produit aura pour nom "Téléphone", mais si j'avais instancié mon produit sans passer d'argument il se serait automatiquement appelé "Téléviseur"
+$produit = new Produit("Téléphone");
+```
+
+> En PHP, le constructeur d'une classe s'appelle une méthode **magique**, tout simplement car elle est automatiquement appelée dans un certain contexte (ici l'instanciation d'un objet de cette classe). Le nom d'une méthode magique est toujours précédé de 2 "underscores", caractère `_`
+
+#### Constantes de classe
+
+Il est possible de définir des constantes dans une classe. Cela peut être utile pour centraliser des données qu'on ne souhaite pas modifier au niveau de la classe elle-même, et ainsi pouvoir travailler avec dans ses différentes méthodes :
+
+```php
+<?php
+class Email
+{
+  private string $email;
+
+  //...
+
+  public function getDomain(): string
+  {
+    $emailParts = explode('@', $this->email);
+    return $emailParts[1];
+  }
+}
+
+class SpamChecker
+{
+  private const SPAM_DOMAINS = ['youhou.com', 'mailinator.com', 'free.fr', 'hello.net'];
+
+  public function isSpam(Email $email): bool
+  {
+    return array_search($email->getDomain(), self::SPAM_DOMAINS) !== false;
+  }
+}
+```
+
+> La manière d'accéder à une constante de classe diffère de l'accès à un attribut. Pour accéder à un attribut, on va utiliser une flèche `->` précédée du mot-clé `$this`. Pour accéder à une constante, on utilisera `self::MA_CONSTANTE` au sein de la classe, et `NomDeLaClasse::MA_CONSTANTE` en-dehors de la classe
+
+#### Exceptions
+
+Les exceptions permettent d'effectuer une **gestion d'erreurs** dans le cadre d'une programmation orientée objet.
+
+En effet, quand on conçoit une fonctionnalité, on va prévoir un flot d'exécution normal. Mais il est possible que surviennent des situations indésirables. On peut alors prévoir leur arrivée en tant qu'elles constituent une **exception** au comportement prévu.
+
+Ainsi, nous pouvons **lancer** une exception au code appelant, qui sera chargé de l'**attraper**.
+
+C'est ici qu'interviendra la gestion de l'erreur : si on attrape une exception, alors nous pouvons gérer son arrivée et agir en conséquence.
+
+##### Exemple
+
+Dans une classe `Email`, à laquelle je fournis l'email à stocker en attribut lors de la construction, je souhaite empêcher l'instanciation de la classe si la valeur passée est incorrecte (email mal formaté).
+
+Ce comportement aurait une double utilité : non seulement je détecterai l'erreur au plus tôt (dès la construction de l'objet), mais en empêchant son instanciation, j'empêche donc également le code qui a appelé ce constructeur de disposer d'une instance de classe dans un état instable (avec un email incorrect, mon instance d'`Email` n'est pas saine).
+
+Ainsi :
+
+```php
+class Email
+{
+  private string $email;
+
+  /**
+   * Creates a new Email instance
+   *
+   * @param string $email The value to be stored in instance
+   * @throws InvalidArgumentException if email format is not valid
+   */
+  public function __construct(string $email)
+  {
+    $this->email = $email;
+
+    if (!$this->isValid()) {
+      throw new InvalidArgumentException("Le format de l'adresse email est invalide");
+    }
+  }
+
+  public function isValid(): bool
+  {
+    return filter_var($this->email, FILTER_VALIDATE_EMAIL) !== false;
+  }
+
+  //...
+}
+```
+
+Et dans un fichier qui aurait besoin d'une instance de la classe `Email` :
+
+```php
+try {
+  $email = new Email($_POST['email']);
+} catch (InvalidArgumentException $ex) {
+  echo $ex->getMessage();
+  exit;
+}
+```
+
+Ceci nous évite de faire quelque chose comme :
+
+```php
+$email = new Email($_POST['email']);
+// A ce moment, on dispose d'une instance dans un état invalide.
+// Donc, nous sommes obligés d'appeler isValid pour valider son état avant d'envisager
+// quoi que ce soit d'autre.
+// C'est exactement le problème : on risque d'oublier d'appeler systématiquement
+// cette méthode pour vérifier l'intégrité de notre objet, et donc
+// manipuler un objet invalide ==> source d'erreurs non maîtrisées
+if (!$email->isValid()) {
+  echo "Le format de l'adresse email est invalide";
+  exit;
+}
+```
+
+> Les exceptions permettent donc une détection plus rapide et plus claire des comportements non désirés
+
+## Bases de données - PDO
+
+Nous avons, pour le moment, impliqué 2 acteurs dans le fonctionnement de notre application : un client (le navigateur) et un serveur (notre application PHP).
+
+Si nous souhaitons réaliser une application retenant des données, et donnant la possibilité à ces données d'évoluer avec le temps, alors nous devons inclure un troisième acteur : un serveur de bases de données.
+
+> Le serveur de bases de données représente la couche permettant de **persister** vos données, ou les sauvegarder, les retenir, si vous préférez
+
+Ainsi, depuis notre application PHP, nous allons communiquer avec une base de données à l'aide d'un objet de type `PDO`.
+
+> Retrouvez la documentation de la classe `PDO` sur la [documentation PHP](https://www.php.net/manual/fr/book.pdo.php)
+
+### Accès
+
+Dans un premier temps, il faut définir les propriétés d'accès à la base de données. Pour ça, on va devoir fournir à notre application certaines informations :
+
+- Un hôte (l'endroit où se trouve le serveur de bases de données), éventuellement suivi d'un port
+- Un nom de base de données (le "catalogue" contenant nos données, dans des tables)
+- Un utilisateur
+- Un mot de passe
+- Un jeu de caractères
+
+#### DSN
+
+Le constructeur de la classe `PDO` attend, en premier paramètre, un **DSN** (Data Source Name).
+
+Nous allons le définir de la façon suivante :
+
+```php
+/*
+mysql:  => le pilote à utiliser pour la connexion
+dbname  => le nom de la base de données
+host    => l'hôte auquel il faut se connecter
+charset => le jeu de caractères à utiliser
+*/
+$dsn = 'mysql:dbname=wf3-php;host=127.0.0.1;charset=utf8mb4';
+```
+
+#### Connexion
+
+Ensuite, en second et troisième paramètres, un utilisateur et un mot de passe, et nous pouvons instancier un nouvel objet de type `PDO` :
+
+```php
+$dsn = 'mysql:dbname=wf3-php;host=127.0.0.1;charset=utf8mb4';
+$user = 'mon_user';
+$password = 'mon_mot_de_passe';
+
+try {
+  $pdo = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+  echo 'Connexion échouée : ' . $e->getMessage();
+}
+```
+
+> La documentation nous indique que si la connexion a échoué, le constructeur de la classe peut lancer une exception. Il convient donc d'encadrer la construction de l'objet par un bloc `try/catch` afin d'avoir une gestion d'erreurs minimale
+
+### Requêtes
+
+Une fois que notre objet `PDO` est instancié, nous allons pouvoir l'utiliser pour émettre des requêtes SQL vers notre serveur de bases de données.
+
+La manière la plus rapide d'exécuter une requête est d'utiliser la méthode `query` :
+
+```php
+$query = "SELECT * FROM users";
+$stmt = $pdo->query($query);
+```
+
+Cette méthode nous renvoie une instace d'objet `PDOStatement`.
+
+Par la suite, nous allons donc devoir parcourir les enregistrements de ce statement. Commençons par récupérer le premier :
+
+```php
+// row = ligne (contenant les données d'un enregistrement)
+// fetch signifie "lire"/"récupérer"
+$row = $stmt->fetch();
+var_dump($row);
+```
+
+Si nous voulions récupérer tous les enregistrements, un par un donc, avec la méthode `fetch`, nous devrions utiliser une boucle :
+
+```php
+// Le while s'arrêtera automatiquement après la dernière ligne des résultats, puisque la méthode fetch renverra false
+while ($row = $stmt->fetch()) {
+  var_dump($row);
+}
+```
+
+Enfin, si nous voulions récupérer tous les enregistrements directement dans une variable, nous pourrions également utiliser la méthode `fetchAll` :
+
+```php
+$results = $stmt->fetchAll();
+```
+
+#### Mode de lecture
+
+Par défaut, `fetch` ou `fetchAll` nous renvoient un tableau mélangeant des index numériques et des clés portant le nom des colonnes du résultat.
+
+Si on veut récupérer seulement un tableau associatif, on peut l'indiquer à PDO :
+
+```php
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+  var_dump($row);
+}
+```
+
+On pourra ainsi exploiter chaque `$row` en accédant à ses colonnes via leur nom, comme un tableau associatif (`$row['nom']` par exemple).
