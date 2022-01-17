@@ -2,6 +2,7 @@
 function getConnection(): PDO
 {
   $dbConfiguration = parse_ini_file('config/db.ini');
+  
   $dsn = "mysql:dbname=" . $dbConfiguration['db_name'] .
     ";host=" . $dbConfiguration['host'] .
     ";charset=" . $dbConfiguration['charset'];
