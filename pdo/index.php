@@ -1,8 +1,8 @@
 <?php
 
 $dsn = "mysql:dbname=wf3-php;host=127.0.0.1;charset=utf8mb4";
-$user = "wf3-php-2";
-$password = "-[@q/ZZ1(v7Tf1_C";
+$user = "wf3-php";
+$password = ")zM35[Z[lun*OEsj";
 
 try {
   $pdo = new PDO($dsn, $user, $password);
