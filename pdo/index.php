@@ -1,8 +1,8 @@
 <?php
 
 $dsn = "mysql:dbname=wf3-php; host=127.0.0.1;charset=utf8mb4";
-$user = "wf3-php";
-$password = "jarvis";
+$user = "root";
+$password = "";
 
 // $pdo = new PDO($dsn, $user, $password);
 
@@ -27,7 +27,7 @@ try {
 $query = "SELECT * FROM people";
 $stmt = $pdo->query($query);
 // $row = $stmt->fetch(PDO::FETCH_ASSOC);
-// var_dump($row);
+var_dump($stmt);
 
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
