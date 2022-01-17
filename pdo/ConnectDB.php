@@ -2,8 +2,8 @@
 
 class ConnectDB
 {
-    private string $user = "root";
-    private string $password = "";
+    private string $user = "wf3-php-2";
+    private string $password = "-[@q/ZZ1(v7Tf1_C";
     private string $db = "wf3-php";
     private string $host = "127.0.0.1";
     private string $charset = "utf8mb4";
