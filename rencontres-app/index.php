@@ -21,9 +21,13 @@ Les pages à réaliser sont :
 
 
 <?php
+require_once "User.php";
 require_once "layout/header.php";
  ?>   
  <h1 class="text-center">Bienvenue sur Rencontres-app !</h1>
 <?php
+$p = new User();
+var_dump($p->getUsersList());
+
 require_once "layout/footer.php";
 
