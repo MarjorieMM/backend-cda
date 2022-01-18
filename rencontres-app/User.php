@@ -47,6 +47,7 @@ public function register(string $pseudo, string $password, DateTime $birthdate, 
 
 public function login(string $pseudo, string $password)
 {
+    $sql = "SELECT pseudo, password FROM rencontres WHERE pseudo=$pseudo AND password=$password";
   
 }
 
